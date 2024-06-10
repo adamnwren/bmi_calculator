@@ -1,10 +1,13 @@
-import 'package:bmi_calculator/bmi.dart';
+import 'package:bmi_calculator/main.dart';
+import 'package:bmi_calculator/screens/results_page.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'number_widget.dart';
-import 'sex_widget.dart';
-import 'simple_box.dart';
-import 'constants.dart';
+import '../components/bottom_button.dart';
+import '../components/sex_widget.dart';
+import '../components/simple_box.dart';
+import '../constants.dart';
+import 'package:bmi_calculator/bmi.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -29,10 +32,16 @@ class _InputPageState extends State<InputPage> {
     });
   }
 
+  double calculateBMI(int weight, int height) {
+    //((height / 100)^2);
+    return 2.0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('BMI CALCULATOR'),
         titleTextStyle: const TextStyle(
           color: Colors.white,
@@ -136,7 +145,7 @@ class _InputPageState extends State<InputPage> {
                     ),
                     Text(
                       bmiWeight.toString(),
-                      style: kLabelTextStyle,
+                      style: kHeavyStyle,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -144,13 +153,6 @@ class _InputPageState extends State<InputPage> {
                         RoundIconButton(
                           icon: FontAwesomeIcons.plus,
                           onPressed: () => updateWeight(bmiWeight + 1),
-                          /*
-                            onPressed: () {
-                              setState(() {
-                                bmiWeight++;
-                              });
-                            }
-                            */
                         ),
                         SizedBox(
                           width: 15,
@@ -175,7 +177,7 @@ class _InputPageState extends State<InputPage> {
                     ),
                     Text(
                       bmiAge.toString(),
-                      style: kLabelTextStyle,
+                      style: kHeavyStyle,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -183,13 +185,6 @@ class _InputPageState extends State<InputPage> {
                         RoundIconButton(
                           icon: FontAwesomeIcons.plus,
                           onPressed: () => updateAge(bmiAge + 1),
-                          /*
-                            onPressed: () {
-                              setState(() {
-                                bmiWeight++;
-                              });
-                            }
-                            */
                         ),
                         SizedBox(
                           width: 15,
@@ -198,18 +193,6 @@ class _InputPageState extends State<InputPage> {
                           icon: FontAwesomeIcons.minus,
                           onPressed: () => updateAge(bmiAge - 1),
                         ),
-                        /*
-                        FloatingActionButton(
-                            backgroundColor: Color(0xFF4C4F5E),
-                            child: Icon(
-                              Icons.remove,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                bmiWeight--;
-                              });
-                            })*/
                       ],
                     ),
                   ],
@@ -218,32 +201,21 @@ class _InputPageState extends State<InputPage> {
             ],
           ),
         ),
-        Container(
-          color: kPinkC,
-          margin: EdgeInsets.only(top: 15.0),
-          width: double.infinity,
-          height: kBottomContainerHeight,
-        ),
+        BottomButton(
+            buttonTitle: 'Calculate',
+            onTap: () {
+              Bmi calc = Bmi(weight: bmiWeight, height: bmiHeight);
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultsPage(
+                            bmiResults: calc.getBMI(),
+                            resultText: calc.getResults(),
+                            interpretation: calc.getInterpretation(),
+                          )));
+            }),
       ]),
-    );
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  const RoundIconButton({super.key, required this.icon, required this.onPressed});
-
-  final VoidCallback? onPressed;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      shape: CircleBorder(),
-      fillColor: Color(0xFF4C4F5E),
-      constraints: BoxConstraints(minWidth: 50.0, minHeight: 50.0),
-      onPressed: onPressed,
-      elevation: 7.0,
     );
   }
 }
