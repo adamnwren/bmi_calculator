@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 
-const greyC = Color(0xFF1D1E33);
-const pinkC = Color(0xFFEB1555);
-const activeCardColor = Color(0xFF1D1E33);
-const inactiveCardColor = Color(0xFF111328);
+// COLORS
+const kGreyC = Color(0xFF1D1E33);
+const kPinkC = Color(0xFFEB1555);
+const kActiveCardColor = Color(0xFF1D1E33);
+const kInactiveCardColor = Color(0xFF111328);
 
+//ENUMS
 enum Gender { MALE, FEMALE }
 
-const double bottomContainerHeight = 80;
+// SIZES
+const double kBottomContainerHeight = 80;
 
-const labelTextStyle = TextStyle(fontSize: 28.0, color: Color(0xFF8D8E98), fontWeight: FontWeight.bold);
+// STYLES
+const kLabelTextStyle = TextStyle(fontSize: 28.0, color: Color(0xFF8D8E98), fontWeight: FontWeight.bold);
+const kHeavyStyle = TextStyle(fontSize: 50.0, fontWeight: FontWeight.w900);
